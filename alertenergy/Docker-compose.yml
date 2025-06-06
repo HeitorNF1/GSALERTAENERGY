@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/alertdb
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=senha123
+
+  db:
+    image: mysql:8
+    container_name: mysql-alertdb
+    restart: always
+    environment:
+      MYSQL_DATABASE: alertdb
+      MYSQL_ROOT_PASSWORD: senha123
+    ports:
+      - "3308:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
